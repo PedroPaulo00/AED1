@@ -1,46 +1,47 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 #include <stack>
 
 using namespace std;
 
 int main(){
-    stack<int> pilha; //cria uma instância de uma pilha vazia que pode armazenar elementos do tipo int
+    stack<int> tentativas; //pilha para armazenar as tentativas
 
-    cout << "Bem-vindo ao jogo da pilha!" << endl;
-    cout << "Empilhe ou desempilhe números. Digite 0 para sair." << endl;
+    cout << "Bem-vindo ao jogo de adivinhação!" << endl;
+    cout << "Você tem 7 chances para adivinhar um número entre 1 e 100." << endl;
 
-    int opcao, numero;
-    
-    do{
-        cout << "Escolha uma opção:" << endl;
-        cout << "1. Empilhar" << endl;
-        cout << "2. Desempilhar" << endl;
-        cout << "0. Sair" << endl;
+    //gera um número aleatório entre 1 e 100
+    srand(time(NULL));
+    int numeroSecreto = rand() % 100 + 1;
 
-        cin >> opcao;
+    bool acertou = false; //função booleana para saber se é true ou false
+    int tentativa;
+    for(int i = 1; i <= 7; ++i){
+        cout << "Tentativa " << i << ": ";
+        cin >> tentativa;
 
-        switch (opcao) {
-            case 1:
-                cout << "Digite um número para empilhar: ";
-                cin >> numero;
-                pilha.push(numero); //adicionará o valor ao topo da pilha.
-                break;
-            case 2:
-                if(!pilha.empty()){ //verifica se a pilha está vazia
-                    numero = pilha.top(); //retorna o valor do elemento no topo da pilha, mas não remove
-                    pilha.pop(); //remove o elemento do topo da pilha
-                    cout << "Número desempilhado: " << numero << endl;
-                } 
-                else{
-                    cout << "A pilha está vazia!" << endl;
-                }
-                break;
-            case 0:
-                cout << "Saindo do jogo..." << endl;
-                break;
-            default:
-                cout << "Opção inválida!" << endl;
-                break;
+        tentativas.push(tentativa); //armazena a tentativa na pilha
+
+        if(tentativa == numeroSecreto){
+            acertou = true;
+            break;
+        } else if(tentativa < numeroSecreto){
+            cout << "Tente um número maior!" << endl;
+        } else{
+            cout << "Tente um número menor!" << endl;
         }
-    }while(opcao != 0);
+    }
+
+    if(acertou){
+        cout << "Parabéns! Você acertou o número secreto." << endl;
+    } else{
+        cout << "Suas tentativas acabaram. O número secreto era: " << numeroSecreto << endl;
+    }
+
+    cout << "Suas tentativas anteriores: ";
+    while(!tentativas.empty()){
+        cout << tentativas.top() << " "; //retorna o elemento no topo da pilha, ou seja, o elemento adicionado recentemente
+        tentativas.pop(); //remove o elemento do topo da pilha
+    }
 }
