@@ -1,0 +1,46 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int main(){
+    stack<int> pilha; //cria uma instância de uma pilha vazia que pode armazenar elementos do tipo int
+
+    cout << "Bem-vindo ao jogo da pilha!" << endl;
+    cout << "Empilhe ou desempilhe números. Digite 0 para sair." << endl;
+
+    int opcao, numero;
+    
+    do{
+        cout << "Escolha uma opção:" << endl;
+        cout << "1. Empilhar" << endl;
+        cout << "2. Desempilhar" << endl;
+        cout << "0. Sair" << endl;
+
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1:
+                cout << "Digite um número para empilhar: ";
+                cin >> numero;
+                pilha.push(numero); //adicionará o valor ao topo da pilha.
+                break;
+            case 2:
+                if(!pilha.empty()){ //verifica se a pilha está vazia
+                    numero = pilha.top(); //retorna o valor do elemento no topo da pilha, mas não remove
+                    pilha.pop(); //remove o elemento do topo da pilha
+                    cout << "Número desempilhado: " << numero << endl;
+                } 
+                else{
+                    cout << "A pilha está vazia!" << endl;
+                }
+                break;
+            case 0:
+                cout << "Saindo do jogo..." << endl;
+                break;
+            default:
+                cout << "Opção inválida!" << endl;
+                break;
+        }
+    }while(opcao != 0);
+}
